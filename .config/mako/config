@@ -1,0 +1,49 @@
+# ==============================================================================
+# MAKO CONFIG - Gruvbox theme (matches hyprland.conf palette)
+# Install to: ~/.config/mako/config
+# ==============================================================================
+
+sort=-time
+layer=overlay
+anchor=top-right
+
+width=340
+height=120
+margin=10
+padding=12
+
+border-size=2
+border-radius=8
+border-color=#7c4a6bff
+
+background-color=#282828ee
+text-color=#ebdbb2ff
+
+font=sans 10
+default-timeout=5000
+ignore-timeout=0
+
+icons=1
+max-icon-size=48
+
+# ------------------------------------------------------------------------------
+# Urgency levels
+# ------------------------------------------------------------------------------
+[urgency=low]
+border-color=#3c3836ff
+text-color=#a89984ff
+
+[urgency=normal]
+border-color=#7c4a6bff
+
+[urgency=critical]
+border-color=#cc241dff
+background-color=#3c1f1dee
+text-color=#fbf1c7ff
+default-timeout=0
+
+# Make your battery_alert.sh notification impossible to miss
+[urgency=critical app-name="Battery Low"]
+border-color=#fb4934ff
+default-timeout=0
+
