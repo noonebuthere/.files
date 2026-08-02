@@ -1,0 +1,8 @@
+plugin_dirs = ['/home/fabian/.vst']
+vst2_location = 'centralized'
+no_verify = false
+blacklist = []
+
+[last_known_config]
+wine_version = 'wine-11.8.r0.gb74a1a3a ( TkG Staging NTsync )'
+yabridge_host_hash = -2776820427723807768

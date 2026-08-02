@@ -1,0 +1,89 @@
+/* ~/.config/waybar/style.css — Gruvbox Dark (Pastel Pink Background) */
+* {
+    border: none;
+    border-radius: 0;
+    font-family: "JetBrainsMono Nerd Font", "Symbols Nerd Font Mono", monospace;
+    font-size: 12px;
+    min-height: 0;
+}
+window#waybar {
+    background: #55404a;
+    color: #ebdbb2;
+    border-bottom: 1px solid #7a5460;
+}
+/* ── Workspaces ─────────────────────────────────────── */
+#workspaces button {
+    padding: 0 6px;
+    min-width: 22px;
+    background: transparent;
+    border-radius: 5px;
+    margin: 3px 2px;
+    transition: all 0.15s ease;
+}
+#workspaces button.active {
+    background: #7a5460;
+    color: #d3869b;
+}
+#workspaces button.urgent {
+    color: #cc241d;
+}
+#workspaces button:hover {
+    background: #714b57;
+    color: #ebdbb2;
+}
+
+/* ── Mode / Submap (Hyprland equivalent) ────────────── */
+#submap, #mode {
+    color: #fe8019;
+    padding: 0 8px;
+    font-weight: bold;
+}
+/* ── Separator ──────────────────────────────────────── */
+#custom-sep {
+    padding: 0 2px;
+    font-size: 14px;
+}
+/* ── Shared padding for all modules ─────────────────── */
+#clock, #cpu, #memory, #temperature, #disk,
+#network, #pulseaudio, #battery,
+#idle_inhibitor, #tray {
+    padding: 0 8px;
+}
+/* ── Clock ──────────────────────────────────────────── */
+#clock {
+    color: #ebdbb2;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    font-size: 13px;
+}
+/* ── Per-module colors ───────────────────────────────── */
+#cpu            { color: #fe8019; }
+#memory         { color: #83a598; }
+#temperature    { color: #fe8019; }
+#temperature.critical { color: #cc241d; }
+#disk           { color: #b8bb26; }
+#network        { color: #8ec07c; }
+#pulseaudio     { color: #d3869b; }
+#pulseaudio.muted { color: #665c54; }
+#battery        { color: #fabd2f; }
+#battery.warning    { color: #fe8019; }
+#battery.critical   { color: #cc241d; }
+#battery.charging,
+#battery.plugged    { color: #b8bb26; }
+#idle_inhibitor { color: #ab8f9a; }
+#idle_inhibitor.activated { color: #fabd2f; }
+#tray           { color: #ab8f9a; }
+#tray > * { margin: 0 4px; }
+/* ── Tooltips ───────────────────────────────────────── */
+tooltip {
+    background: #63404b;
+    border: 1px solid #7a5460;
+    border-radius: 6px;
+    color: #ebdbb2;
+    font-size: 11px;
+}
+tooltip label {
+    color: #ebdbb2;
+    padding: 4px 8px;
+}
+
