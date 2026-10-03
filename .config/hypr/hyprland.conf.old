@@ -1,0 +1,361 @@
+# ==============================================================================
+# HYPRLAND CONFIGURATION
+# Ported from Sway/SwayFX setup
+# ==============================================================================
+
+# ------------------------------------------------------------------------------
+# MONITORS & LAYOUT
+# Sway:
+# output eDP-1 res 1920x1080 pos 1920 1440
+# output DP-3 res 1920x1200 pos 0 758
+# output HDMI-A-1 res 2560x1440 pos 1920 0
+# ------------------------------------------------------------------------------
+#monitor = eDP-1, 1920x1080@60, 1920x1440, 1
+#monitor = DP-3, 1920x1200@60, 0x758, 1
+#monitor = HDMI-A-1, 2560x1440@60, 1920x0, 1
+# Fallback for unplugged/extra monitors
+#monitor = , preferred, auto, 1
+
+# ------------------------------------------------------------------------------
+# INPUT & GESTURES
+# Sway: xkb_layout "de", xkb_variant "nodeadkeys", 3-finger swipe gestures
+# ------------------------------------------------------------------------------
+input {
+    kb_layout = de
+    kb_variant = nodeadkeys
+    follow_mouse = 1
+    numlock_by_default = true
+    touchpad {
+        natural_scroll = false
+    }
+}
+
+device {
+    name = synps/2-synaptics-touchpad
+    sensitivity = 0.7
+}
+
+gestures {
+    # workspace_swipe / workspace_swipe_fingers were removed in 0.51+;
+    # 3-finger horizontal swipe now switches workspaces via the gesture system
+    gesture = 3, horizontal, workspace
+}
+
+# ------------------------------------------------------------------------------
+# ENVIRONMENT VARIABLES & THEMING
+# Sway: Gruvbox theme, Capitaine cursor (size 24), Wayland portal imports
+# ------------------------------------------------------------------------------
+env = XCURSOR_THEME,capitaine-cursors-gruvbox
+env = XCURSOR_SIZE,24
+#env = HYPRCURSOR_THEME,capitaine-cursors-gruvbox
+#env = HYPRCURSOR_SIZE,24
+env = QT_QPA_PLATFORMTHEME,kvantum
+env = XDG_CURRENT_DESKTOP,Hyprland
+env = XDG_SESSION_TYPE,wayland
+env = XDG_SESSION_DESKTOP,Hyprland
+
+exec-once = gsettings set org.gnome.desktop.interface cursor-theme 'capitaine-cursors-gruvbox'
+
+# ------------------------------------------------------------------------------
+# AUTOSTART / EXEC
+# ------------------------------------------------------------------------------
+# System environment & Wayland portal setup
+exec-once = dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
+exec-once = systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP XCURSOR_THEME XCURSOR_SIZE
+exec-once = systemctl --user start hyprland-session.target
+
+# Waybar restart on config reload
+exec-once = waybar
+exec-always = pkill waybar; waybar &
+
+# Wallpaper (using swaybg)
+exec-once = swaybg -i ~/backgrounds/lake-mountains.jpg -m fill
+
+# Clipboard management
+exec-once = wl-paste --type text --watch cliphist store
+exec-once = wl-paste --type image --watch cliphist store
+
+# Background Daemons & Utilities
+exec-once = mako
+exec-once = nm-applet --indicator
+exec-once = /usr/bin/diodon
+exec-once = /usr/libexec/lxqt-policykit-agent
+exec-once = input-remapper-control --command set-config-dir --config-dir ~/.config/input-remapper-2
+exec-once = sudo tuned-adm profile throughput-performance
+exec-once = ~/.config/sway/scripts/battery_alert.sh
+
+exec-once = hypridle
+
+# GTK & Gnome schema application
+exec-once = gsettings set org.gnome.desktop.interface gtk-theme 'Gruvbox-B-LB-Dark'
+exec-once = gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
+exec-once = gsettings set org.gnome.desktop.interface cursor-theme 'Capitaine Cursors (Gruvbox)'
+exec-once = gsettings set org.gnome.desktop.interface cursor-size 24
+
+# ------------------------------------------------------------------------------
+# VISUALS & LOOK AND FEEL (Ported from SwayFX)
+# SwayFX: corner_radius 8, gaps 6, pixel border 2, Gruvbox colors
+# ------------------------------------------------------------------------------
+general {
+    gaps_in = 6
+    gaps_out = 10
+    border_size = 2
+    
+    # Sway palette: active #7c4a6b, inactive #3c3836
+    col.active_border = rgba(7c4a6bff) rgba(7c4a6bff) 45deg
+    col.inactive_border = rgba(3c3836ff)
+    
+    layout = dwindle
+}
+ 
+# no gaps when only one window is open on a workspace - cleaner look
+workspace = w[tv1], gapsout:0, gapsin:0
+workspace = f[1], gapsout:0, gapsin:0
+ 
+decoration {
+    rounding = 10
+    rounding_power = 2   # >2 = softer "squircle" corners instead of plain circular
+ 
+    active_opacity = 1.0
+    inactive_opacity = 0.88
+ 
+    # SwayFX Dim Inactive (default_dim_inactive 0.15)
+    dim_inactive = true
+    dim_strength = 0.15
+ 
+    # SwayFX Shadow Settings
+    shadow {
+        enabled = true
+        range = 6
+        render_power = 3
+        offset = 1 2
+        color = rgba(7c4a6b55)
+        color_inactive = rgba(00000044)
+    }
+ 
+    # SwayFX Blur Settings (passes 3, radius 3)
+    blur {
+        enabled = true
+        size = 5
+        passes = 3
+        xray = false
+        special = true    # blur the special workspace too
+        popups = true     # blur tooltips/menus
+        vibrancy = 0.15
+    }
+}
+
+animations {
+    enabled = true
+ 
+    bezier = myBezier, 0.05, 0.9, 0.1, 1.05
+    bezier = easeOutExpo, 0.16, 1, 0.3, 1
+    bezier = easeInOutQuad, 0.45, 0, 0.55, 1
+    bezier = linear, 0, 0, 1, 1
+ 
+    animation = windows, 1, 4, easeOutExpo, popin 90%
+    animation = windowsIn, 1, 4, easeOutExpo, popin 90%
+    animation = windowsOut, 1, 4, easeInOutQuad, popin 80%
+    animation = windowsMove, 1, 4, easeOutExpo
+ 
+    animation = fade, 1, 5, default
+    animation = fadeIn, 1, 3, default
+    animation = fadeOut, 1, 3, default
+ 
+    animation = border, 1, 8, default
+    animation = borderangle, 1, 20, linear
+ 
+    animation = workspaces, 1, 5, easeOutExpo, slide
+    animation = specialWorkspace, 1, 5, easeOutExpo, slidevert
+ 
+    animation = layers, 1, 3, easeOutExpo, slide   # rofi/wofi/notifications pop
+}
+
+
+dwindle {
+    preserve_split = true
+}
+
+# ------------------------------------------------------------------------------
+# KEYBINDINGS
+# Modifier: Mod4 (Super / Windows key)
+# ------------------------------------------------------------------------------
+$mainMod = SUPER
+
+# Core Applications
+bind = $mainMod, RETURN, exec, alacritty
+bind = $mainMod SHIFT, Q, killactive,
+bind = $mainMod, D, exec, rofi -show drun
+bind = $mainMod, E, exec, thunar
+bind = $mainMod, F, exec, MOZ_ENABLE_WAYLAND=1 firefox --new-window
+bind = $mainMod SHIFT, L, exec, hyprlock
+bind = $mainMod SHIFT, S, exec, grim -g "$(slurp)" - | wl-copy
+bind = $mainMod, T, exec, alacritty -e temp
+
+# Clipboard Manager
+bind = CTRL ALT SHIFT, V, exec, cliphist list | rofi -dmenu -p "Clipboard" | cliphist decode | wl-copy
+
+# System Monitor (btop popup)
+bind = CTRL, ESCAPE, exec, alacritty --class btop -e btop
+
+# Media & Hardware Keys
+bindel = , XF86AudioRaiseVolume, exec, pamixer --allow-boost --set-limit 200 -i 5
+bindel = , XF86AudioLowerVolume, exec, pamixer --allow-boost --set-limit 200 -d 5
+bindl  = , XF86AudioMute, exec, pamixer --toggle-mute
+bindl  = , XF86AudioMicMute, exec, pamixer --default-source --toggle-mute
+bindel = , XF86MonBrightnessUp, exec, brightnessctl set +5% -e
+bindel = , XF86MonBrightnessDown, exec, brightnessctl set 5%- -e
+bindl = , XF86AudioPlay, exec, playerctl play-pause
+bindl = , XF86AudioNext, exec, playerctl next
+bindl = , XF86AudioPrev, exec, playerctl previous
+bindl = , XF86AudioStop, exec, playerctl stop
+
+
+# Session Control
+bind = $mainMod SHIFT, R, exec, hyprctl reload
+bind = $mainMod SHIFT, E, exec, hyprctl dispatch exit
+bind = $mainMod SHIFT CTRL, K, killactive,
+
+# Window Operations
+bind = $mainMod, SPACE, togglefloating,
+bind = $mainMod SHIFT, F, fullscreen, 0
+bind = $mainMod, V, layoutmsg, togglesplit # Alternate to sway vertical split
+
+# Focus movement (Arrow keys)
+bind = $mainMod, left, movefocus, l
+bind = $mainMod, right, movefocus, r
+bind = $mainMod, up, movefocus, u
+bind = $mainMod, down, movefocus, d
+
+# Move focused window (Shift + Arrow keys)
+bind = $mainMod SHIFT, left, movewindow, l
+bind = $mainMod SHIFT, right, movewindow, r
+bind = $mainMod SHIFT, up, movewindow, u
+bind = $mainMod SHIFT, down, movewindow, d
+
+# Switch to workspace on currently focused monitor
+bind = $mainMod, 1, workspace, 1
+bind = $mainMod, 2, workspace, 2
+bind = $mainMod, 3, workspace, 3
+bind = $mainMod, 4, workspace, 4
+bind = $mainMod, 5, workspace, 5
+bind = $mainMod, 6, workspace, 6
+bind = $mainMod, 7, workspace, 7
+bind = $mainMod, 8, workspace, 8
+bind = $mainMod, 9, workspace, 9
+bind = $mainMod, 0, workspace, 10
+
+# Move window to workspace
+bind = $mainMod SHIFT, 1, movetoworkspace, 1
+bind = $mainMod SHIFT, 2, movetoworkspace, 2
+bind = $mainMod SHIFT, 3, movetoworkspace, 3
+bind = $mainMod SHIFT, 4, movetoworkspace, 4
+bind = $mainMod SHIFT, 5, movetoworkspace, 5
+bind = $mainMod SHIFT, 6, movetoworkspace, 6
+bind = $mainMod SHIFT, 7, movetoworkspace, 7
+bind = $mainMod SHIFT, 8, movetoworkspace, 8
+bind = $mainMod SHIFT, 9, movetoworkspace, 9
+bind = $mainMod SHIFT, 0, movetoworkspace, 10
+
+# Submap / Mode: Resize (Super + R to enter, Escape/Enter to leave)
+bind = $mainMod, R, submap, resize
+submap = resize
+binde = , right, resizeactive, 10 0
+binde = , left, resizeactive, -10 0
+binde = , up, resizeactive, 0 -10
+binde = , down, resizeactive, 0 10
+binde = , l, resizeactive, 10 0
+binde = , j, resizeactive, -10 0
+binde = , k, resizeactive, 0 -10
+binde = , o, resizeactive, 0 10
+bind = , escape, submap, reset
+bind = , return, submap, reset
+bind = $mainMod, R, submap, reset
+submap = reset
+
+# Mouse Window Control (Drag & Resize)
+bindm = $mainMod, mouse:272, movewindow
+bindm = $mainMod, mouse:273, resizewindow
+
+# Switch Lid Lock
+bindl = , switch:on:Lid Switch, exec, swaylock -f
+
+# ------------------------------------------------------------------------------
+# WINDOW & LAYER RULES
+# Native floating and popup handling fixes the original multi-window app issues
+# ------------------------------------------------------------------------------
+# btop terminal popup styling
+windowrule = match:class ^(btop)$, float on, size 1200 750, center on
+
+# Audio control
+windowrule = match:class ^(pavucontrol)$, float on
+
+# Thunar Rename dialog
+windowrule = match:class ^(thunar)$, match:title ^(Rename .+)$, float on
+
+# Steam Toast Notifications
+windowrule = match:class ^(Steam)$, match:title ^(notificationtoasts_)$, float on, no_focus on
+
+# Godot Editor
+windowrule = match:class ^(Godot)$, float on
+
+# Float and center LXQt Polkit Agent
+windowrule = match:initial_class ^(lxqt-policykit-agent)$, float on, center on
+
+# Generic Dialogs & Popups (Fixes standard multi-window app quirks)
+# NOTE: "windowdance:1" from the original file isn't a real match property
+# (not class/title/etc.) and was dropped rather than translated - remove or
+# tell me what it was meant to match and I'll add it back correctly.
+windowrule = match:title ^(Open File)$, float on, center on
+windowrule = match:title ^(Save As)$, float on, center on
+windowrule = match:title ^(Select a File)$, float on, center on
+
+# Blur rules for Waybar background
+layerrule = blur on, ignore_alpha 1, match:namespace waybar
+
+layerrule = blur on, match:namespace notifications
+
+layerrule = animation none, match:namespace selection
+
+misc {
+    disable_hyprland_guiutils_check = true
+}
+
+$terminal = alacritty
+
+#exec-once = ~/.config/hypr/cava-toggle.sh
+
+windowrule = float on, size 400 200, move (monitor_w-410) (monitor_h-210), workspace 3, no_focus on, match:class ^(cava)$
+
+windowrule = float on, center on, match:class ^(miniquad-application)$
+
+source = ~/.config/hypr/monitors.conf
+
+windowrule = float on, pin on, match:class ^(Tk)$
+
+cursor {
+    no_hardware_cursors = true
+    enable_hyprcursor = false
+}
+
+# Start qpwgraph minimized in the background on startup
+exec-once = qpwgraph -m
+
+render {
+    direct_scanout = true
+}
+
+windowrule = immediate on, tile on, match:class ^(steam_app_1422450)$
+
+env = NIXOS_OZONE_WL,1
+
+# Force Intel iHD driver for VA-API hardware acceleration
+env = LIBVA_DRIVER_NAME,iHD
+
+# Smooth render loops for Wayland Backends
+env = CLUTTER_BACKEND,wayland
+env = GDK_BACKEND,wayland,x11,*
+env = QT_QPA_PLATFORM,wayland;xcb
+
+# Force Electron apps to use native Wayland
+env = ELECTRON_OZONE_PLATFORM_HINT,wayland

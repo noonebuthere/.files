@@ -1,4 +1,6 @@
 {
     "workbench.colorTheme": "Gruvbox Dark Hard",
-    "editor.selectionClipboard": false
+    "editor.selectionClipboard": false,
+    "editor.inlineSuggest.enabled": false,
+    "terminal.integrated.enableMultiLinePasteWarning": "never"
 }

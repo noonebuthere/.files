@@ -145,9 +145,6 @@ cat() {
     done
 }
 
-# Run multi-colored system fetch on launch
-fastfetch
-
 # Load Nix Package Manager daemon settings
 [[ -f /etc/profile.d/nix.sh ]] && source /etc/profile.d/nix.sh
 export NIX_REMOTE=daemon
@@ -159,3 +156,15 @@ PROMPT='%F{green}%n@%m%f:%F{blue}%~%f$ '
 export PATH="$HOME/.wakatime:$PATH"
 eval "$(terminal-wakatime init)"
 
+fastfetch
+
+remind list
+
+# latex
+export PATH="/usr/local/texlive/2026/bin/x86_64-linux:$PATH"
+
+export ANDROID_HOME="$HOME/Android"
+export ANDROID_SDK_ROOT="$ANDROID_HOME"
+export ANDROID_NDK_ROOT="$ANDROID_HOME/ndk/30.0.16248370"
+export PATH="$PATH:$ANDROID_HOME/cmdline-tools/latest/bin"
+export PATH="$PATH:$ANDROID_HOME/platform-tools"

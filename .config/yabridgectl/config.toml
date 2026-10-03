@@ -1,8 +1,11 @@
-plugin_dirs = ['/home/fabian/.vst']
+plugin_dirs = [
+    '/home/fabian/.wine/drive_c/Program Files/Common Files/VST3',
+    '/home/fabian/.wine-yabridge-test/drive_c/Program Files/VSTPlugins/Crow Hill',
+]
 vst2_location = 'centralized'
 no_verify = false
 blacklist = []
 
 [last_known_config]
-wine_version = 'wine-11.8.r0.gb74a1a3a ( TkG Staging NTsync )'
-yabridge_host_hash = -2776820427723807768
+wine_version = 'wine-11.11.r0.g4d000a90 ( TkG Staging NTsync )'
+yabridge_host_hash = -2014354333011869082

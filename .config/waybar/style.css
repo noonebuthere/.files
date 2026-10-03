@@ -7,8 +7,8 @@
     min-height: 0;
 }
 window#waybar {
-    background: #55404a;
-    color: #ebdbb2;
+    background: #d9adc2;
+    color: #3c3836;
     border-bottom: 1px solid #7a5460;
 }
 /* ── Workspaces ─────────────────────────────────────── */
@@ -16,25 +16,25 @@ window#waybar {
     padding: 0 6px;
     min-width: 22px;
     background: transparent;
+    color: #3c3836;
     border-radius: 5px;
     margin: 3px 2px;
     transition: all 0.15s ease;
 }
 #workspaces button.active {
-    background: #7a5460;
-    color: #d3869b;
+    background: #d175a2;
+    color: #fbf1f5;
 }
 #workspaces button.urgent {
-    color: #cc241d;
+    color: #9d0006;
 }
 #workspaces button:hover {
     background: #714b57;
-    color: #ebdbb2;
+    color: #fbf1f5;
 }
-
 /* ── Mode / Submap (Hyprland equivalent) ────────────── */
 #submap, #mode {
-    color: #fe8019;
+    color: #af3a03;
     padding: 0 8px;
     font-weight: bold;
 }
@@ -42,6 +42,7 @@ window#waybar {
 #custom-sep {
     padding: 0 2px;
     font-size: 14px;
+    color: #7a5460;
 }
 /* ── Shared padding for all modules ─────────────────── */
 #clock, #cpu, #memory, #temperature, #disk,
@@ -51,28 +52,28 @@ window#waybar {
 }
 /* ── Clock ──────────────────────────────────────────── */
 #clock {
-    color: #ebdbb2;
+    color: #3c3836;
     font-weight: 600;
     letter-spacing: 0.5px;
     font-size: 13px;
 }
 /* ── Per-module colors ───────────────────────────────── */
-#cpu            { color: #fe8019; }
-#memory         { color: #83a598; }
-#temperature    { color: #fe8019; }
-#temperature.critical { color: #cc241d; }
-#disk           { color: #b8bb26; }
-#network        { color: #8ec07c; }
-#pulseaudio     { color: #d3869b; }
-#pulseaudio.muted { color: #665c54; }
-#battery        { color: #fabd2f; }
-#battery.warning    { color: #fe8019; }
-#battery.critical   { color: #cc241d; }
+#cpu            { color: #af3a03; }
+#memory         { color: #076678; }
+#temperature    { color: #af3a03; }
+#temperature.critical { color: #9d0006; }
+#disk           { color: #79740e; }
+#network        { color: #427b58; }
+#pulseaudio     { color: #8f3f71; }
+#pulseaudio.muted { color: #7c6f64; }
+#battery        { color: #b57614; }
+#battery.warning    { color: #af3a03; }
+#battery.critical   { color: #9d0006; }
 #battery.charging,
-#battery.plugged    { color: #b8bb26; }
-#idle_inhibitor { color: #ab8f9a; }
-#idle_inhibitor.activated { color: #fabd2f; }
-#tray           { color: #ab8f9a; }
+#battery.plugged    { color: #79740e; }
+#idle_inhibitor { color: #7c6f64; }
+#idle_inhibitor.activated { color: #b57614; }
+#tray           { color: #7c6f64; }
 #tray > * { margin: 0 4px; }
 /* ── Tooltips ───────────────────────────────────────── */
 tooltip {
