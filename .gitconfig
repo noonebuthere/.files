@@ -3,3 +3,5 @@
 	email = fabian.schwarz2010@gmail.com
 [core]
 	autocrlf = input
+[alias]
+	ca = commit -a

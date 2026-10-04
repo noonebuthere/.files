@@ -2,5 +2,6 @@
     "workbench.colorTheme": "Gruvbox Dark Hard",
     "editor.selectionClipboard": false,
     "editor.inlineSuggest.enabled": false,
-    "terminal.integrated.enableMultiLinePasteWarning": "never"
+    "terminal.integrated.enableMultiLinePasteWarning": "never",
+    "editor.fontFamily": "'JetBrainsMono NF', monospace"
 }

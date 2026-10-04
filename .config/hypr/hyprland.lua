@@ -12,8 +12,8 @@ hl.config({
 
     -- General Window Managing
     general = {
-        gaps_in = 6,
-        gaps_out = 10,
+        gaps_in = 3,
+        gaps_out = { top = 2, right = 3, bottom = 5, left = 3 },
         border_size = 2,
         col = {
             active_border = { colors = {"rgba(7c4a6bff)", "rgba(7c4a6bff)"}, angle = 45 },
@@ -71,10 +71,6 @@ hl.config({
         no_hardware_cursors = true,
         enable_hyprcursor = false,
     },
-
-    render = {
-        direct_scanout = true,
-    }
 })
 
 -- Curves
@@ -277,7 +273,7 @@ hl.window_rule({
 -- Thunar Rename dialog
 hl.window_rule({
     name = "thunar-rename",
-    match = { class = "^(thunar)$", title = "^(Rename .+)$" },
+    match = { class = "^(Thunar)$", title = "^(Rename .+)$" },
     float = true,
 })
 
@@ -379,4 +375,13 @@ hl.layer_rule({
     match = { namespace = "selection" },
     animation = "none",
 })
+
+-- Smart gaps
+hl.workspace_rule({ workspace = "w[tv1]", gaps_out = 0, gaps_in = 0 })
+hl.workspace_rule({ workspace = "f[1]",   gaps_out = 0, gaps_in = 0 })
+hl.window_rule({ match = { float = false, workspace = "w[tv1]" }, border_size = 0 })
+hl.window_rule({ match = { float = false, workspace = "w[tv1]" }, rounding = 0 })
+hl.window_rule({ match = { float = false, workspace = "f[1]" },   border_size = 0 })
+hl.window_rule({ match = { float = false, workspace = "f[1]" },   rounding = 0 })
+
 -- END OF RULES --
